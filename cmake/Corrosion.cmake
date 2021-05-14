@@ -201,6 +201,14 @@ function(_add_cargo_build)
         USES_TERMINAL
     )
 
+    add_test(
+        NAME cargo-test_${target_name}
+        COMMAND
+        $<TARGET_FILE:Rust::Cargo> test --target ${_CORROSION_RUST_CARGO_TARGET}
+        -p ${package_name} --manifest-path ${path_to_toml}
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/${build_dir}
+    )
+
     if (NOT TARGET cargo-clean)
         add_custom_target(cargo-clean)
         add_dependencies(cargo-clean cargo-clean_${target_name})
